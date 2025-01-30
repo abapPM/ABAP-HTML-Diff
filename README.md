@@ -1,36 +1,22 @@
-![Version](https://img.shields.io/endpoint?url=https://shield.abap.space/version-shield-json/github/Marc-Bernard-Tools/ABAP-HTML-Diff/src/zcl_htmldiff.clas.abap/c_version&label=Version&color=blue)
+![Version](https://img.shields.io/endpoint?url=https://shield.abappm.com/github/abapPM/ABAP-HTML-Diff/src/zcl_htmldiff.clas.abap/c_version&label=Version&color=blue)
 
-[![License](https://img.shields.io/github/license/Marc-Bernard-Tools/ABAP-HTML-Diff?label=License&color=success)](LICENSE)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?color=success)](https://github.com/Marc-Bernard-Tools/.github/blob/main/CODE_OF_CONDUCT.md)
-[![REUSE Status](https://api.reuse.software/badge/github.com/Marc-Bernard-Tools/ABAP-HTML-Diff)](https://api.reuse.software/info/github.com/Marc-Bernard-Tools/ABAP-HTML-Diff)
+[![License](https://img.shields.io/github/license/abapPM/ABAP-HTML-Diff?label=License&color=success)](LICENSE)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?color=success)](https://github.com/abapPM/.github/blob/main/CODE_OF_CONDUCT.md)
+[![REUSE Status](https://api.reuse.software/badge/github.com/abapPM/ABAP-HTML-Diff)](https://api.reuse.software/info/github.com/abapPM/ABAP-HTML-Diff)
 
 # ABAP HTML Diff
 
 Library to highlight the content difference between two HTML strings (htmldiff).
 
-Made by [Marc Bernard Tools](https://marcbernardtools.com/) giving back to the [SAP Community](https://community.sap.com/)
-
-NO WARRANTIES, [MIT License](LICENSE)
-
-## HTML Diff
-
 This is a diffing library that understands HTML. Best suited for cases when you want to show a diff of user-generated HTML.
 
-- The implementation is a port of JavaScript (https://github.com/alaorneto/htmldiffer, no license defined)
-- which is a port of CoffeeScript (https://github.com/tnwinc/htmldiff.js, MIT license)
-- which is a port of the original Ruby (https://github.com/myobie/htmldiff, MIT license)
-
 An enhancement was made so the code can also produce the diff of two texts (tags are treated like text).
+
+NO WARRANTIES, [MIT License](LICENSE)
 
 ## Prerequisites
 
 SAP Basis 7.4 or higher
-
-## Installation
-
-You can install ABAP Differ using [abapGit](https://github.com/abapGit/abapGit) either creating a new online repository for https://github.com/Marc-Bernard-Tools/ABAP-HTML-Diff or downloading the repository [ZIP file](https://github.com/Marc-Bernard-Tools/ABAP-HTML-Diff/archive/main.zip) and creating a new offline repository.
-
-We recommend using package `$HTMLDIFF`.
 
 ## Usage
 
@@ -54,7 +40,8 @@ lv_original = '\n'
   && '    </ul>\n'
   && '    <img src="previous.jpg">\n'
   && '    <span>This is some interesting text.</span>\n'.
-
+```
+```abap
 lv_modified = '\n'
   && '    <p>First paragraph.</p>\n'
   && '    <ul>\n'
@@ -67,9 +54,9 @@ lv_modified = '\n'
 
 REPLACE ALL OCCURRENCES OF '\n' IN lv_original WITH cl_abap_char_utilities=>newline.
 REPLACE ALL OCCURRENCES OF '\n' IN lv_modified WITH cl_abap_char_utilities=>newline.
-  
+
 li_htmldiff = zcl_htmldiff=>create( ).
-  
+
 lv_diff = li_htmldiff->htmldiff(
   iv_before   = lv_original
   iv_after    = lv_modified
@@ -96,7 +83,7 @@ lv_diff = li_htmldiff->htmldiff(
   iv_before   = lv_original
   iv_after    = lv_modified
   iv_with_img = abap_true ).
-```  
+```
 
 Result:
 
@@ -120,7 +107,7 @@ There are a few other options you can set in the `constructor`/`create` statemen
 
 Using CSS classes, the result will distinguish between inserts (class `diffins`), deletes (class `diffdel`), and updates (class `diffmod`).
 
-See the [test classes](https://github.com/Marc-Bernard-Tools/ABAP-HTML-Diff/blob/main/src/zcl_htmldiff.clas.testclasses.abap) for more examples.
+See the [test classes](https://github.com/abapPM/ABAP-HTML-Diff/blob/main/src/zcl_htmldiff.clas.testclasses.abap) for more examples.
 
 ### Diffing Text
 
@@ -140,7 +127,7 @@ lv_modified = 'a b c'.
 lv_diff = li_htmldiff->textdiff(
   iv_before = lv_original
   iv_after  = lv_modified ).
-```  
+```
 
 Result:
 
@@ -188,17 +175,33 @@ With the CSS class option, use the following:
 .diffmod { background-color: #ffffdd; }
 ```
 
+## Installation
+
+Install `html-diff` as a global module in your system using [apm](https://abappm.com).
+
+or
+
+Specify the `html-diff` module as a dependency in your project and import it to your namespace using [apm](https://abappm.com).
+
 ## Contributions
 
-All contributions are welcome! Read our [Contribution Guidelines](CONTRIBUTING.md), fork this repo, and create a pull request.
+All contributions are welcome! Read our [Contribution Guidelines](https://github.com/abapPM/{{repo}}/blob/main/CONTRIBUTING.md), fork this repo, and create a pull request.
+
+You can install the developer version of ABAP HTML Diff using [abapGit](https://github.com/abapGit/abapGit) by creating a new online repository for `https://github.com/abapPM/ABAP-HTML-Diff`.
+
+Recommended SAP package: `$HTML-DIFF`
+
+## Attribution
+
+- The implementation is a port of JavaScript (https://github.com/alaorneto/htmldiffer, no license defined)
+- which is a port of CoffeeScript (https://github.com/tnwinc/htmldiff.js, MIT license)
+- which is a port of the original Ruby (https://github.com/myobie/htmldiff, MIT license)
 
 ## About
 
-Made with :heart: in Canada
+Made with ❤ in Canada
 
-Copyright 2021 Marc Bernard <https://marcbernardtools.com/>
+Copyright 2025 apm.to Inc. <https://apm.to>
 
-Follow [@marcfbe](https://twitter.com/marcfbe) on Twitter
-
-<p><a href="https://marcbernardtools.com/"><img width="160" height="65" src="https://marcbernardtools.com/info/MBT_Logo_640x250_on_Gray.png" alt="MBT Logo"></a></p>
+Follow [@marcf.be](https://bsky.app/profile/marcf.be) on Blueksy and [@marcfbe](https://linkedin.com/in/marcfbe) or LinkedIn
 
