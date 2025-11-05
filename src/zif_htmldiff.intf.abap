@@ -4,13 +4,11 @@ INTERFACE zif_htmldiff PUBLIC.
 ************************************************************************
 * ABAP HTML Diff Interface
 *
-* https://github.com/Marc-Bernard-Tools/ABAP-HTML-Diff
-*
 * This  is a port of JavaScript        (https://github.com/alaorneto/htmldiffer, no license)
 * which is a port of CoffeeScript      (https://github.com/tnwinc/htmldiff.js, MIT license)
 * which is a port of the original Ruby (https://github.com/myobie/htmldiff, MIT license)
 *
-* Copyright 2022 Marc Bernard <https://marcbernardtools.com/>
+* Copyright 2024 apm.to Inc. <https://apm.to>
 * SPDX-License-Identifier: MIT
 ************************************************************************
 
