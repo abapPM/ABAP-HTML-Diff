@@ -1,7 +1,7 @@
 {
-  "name": "xxx",
-  "version": "1.0.0",
-  "description": "XXX",
+  "name": "html-diff",
+  "version": "1.0.1",
+  "description": "HTML Diff",
   "type": "module",
   "keywords": [
     "abap",
@@ -10,7 +10,7 @@
   ],
   "homepage": "https://abappm.com",
   "bugs": {
-    "url": "https://github.com/abapPM/ABAP-XXX"
+    "url": "https://github.com/abapPM/ABAP-HTML-Diff"
   },
   "license": "MIT",
   "author": {
@@ -26,7 +26,7 @@
     }
   ],
   "repository": {
-    "url": "https://github.com/abapPM/ABAP-XXX"
+    "url": "https://github.com/abapPM/ABAP-HTML-Diff"
   },
   "funding": {
     "type": "github",
