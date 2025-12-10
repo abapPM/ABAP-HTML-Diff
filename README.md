@@ -185,7 +185,7 @@ Specify the `html-diff` module as a dependency in your project and import it to 
 
 ## Contributions
 
-All contributions are welcome! Read our [Contribution Guidelines](https://github.com/abapPM/{{repo}}/blob/main/CONTRIBUTING.md), fork this repo, and create a pull request.
+All contributions are welcome! Read our [Contribution Guidelines](https://github.com/abapPM/ABAP-HTML-Diff/blob/main/CONTRIBUTING.md), fork this repo, and create a pull request.
 
 You can install the developer version of ABAP HTML Diff using [abapGit](https://github.com/abapGit/abapGit) by creating a new online repository for `https://github.com/abapPM/ABAP-HTML-Diff`.
 
