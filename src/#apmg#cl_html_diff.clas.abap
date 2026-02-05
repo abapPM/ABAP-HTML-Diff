@@ -15,7 +15,7 @@ CLASS /apmg/cl_html_diff DEFINITION
 
   PUBLIC SECTION.
 
-    CONSTANTS c_version TYPE string VALUE '1.0.1' ##NEEDED.
+    CONSTANTS c_version TYPE string VALUE '1.1.0' ##NEEDED.
 
     INTERFACES /apmg/if_html_diff.
 
@@ -39,7 +39,7 @@ CLASS /apmg/cl_html_diff DEFINITION
 
     TYPES:
       ty_token  TYPE string,
-      ty_tokens TYPE STANDARD TABLE OF ty_token WITH DEFAULT KEY.
+      ty_tokens TYPE STANDARD TABLE OF ty_token WITH KEY table_line.
 
     TYPES:
       BEGIN OF ty_match,
@@ -49,11 +49,12 @@ CLASS /apmg/cl_html_diff DEFINITION
         end_in_before   TYPE i,
         end_in_after    TYPE i,
       END OF ty_match,
-      ty_matches TYPE STANDARD TABLE OF ty_match WITH DEFAULT KEY.
+      ty_matches TYPE STANDARD TABLE OF ty_match
+        WITH KEY start_in_before start_in_after length end_in_before end_in_after.
 
     TYPES:
       ty_location  TYPE i,
-      ty_locations TYPE SORTED TABLE OF ty_location WITH UNIQUE DEFAULT KEY.
+      ty_locations TYPE SORTED TABLE OF ty_location WITH UNIQUE KEY table_line.
 
     TYPES:
       BEGIN OF ty_index_row,
@@ -62,8 +63,7 @@ CLASS /apmg/cl_html_diff DEFINITION
       END OF ty_index_row,
       ty_index_tab TYPE HASHED TABLE OF ty_index_row WITH UNIQUE KEY token.
 
-    TYPES:
-      ty_action TYPE string.
+    TYPES ty_action TYPE string.
 
     TYPES:
       BEGIN OF ty_operation,
@@ -72,9 +72,9 @@ CLASS /apmg/cl_html_diff DEFINITION
         end_in_before   TYPE i,
         start_in_after  TYPE i,
         end_in_after    TYPE i,
-      END OF ty_operation.
-    TYPES:
-      ty_operations TYPE STANDARD TABLE OF ty_operation WITH DEFAULT KEY.
+      END OF ty_operation,
+      ty_operations TYPE STANDARD TABLE OF ty_operation
+        WITH KEY action start_in_before end_in_before start_in_after end_in_after.
 
     CONSTANTS:
       BEGIN OF c_action,
@@ -151,14 +151,14 @@ CLASS /apmg/cl_html_diff DEFINITION
     METHODS find_match
       IMPORTING
         !it_before_tokens         TYPE ty_tokens
-        !it_after_tokens          TYPE ty_tokens ##NEEDED
+        !it_after_tokens          TYPE ty_tokens
         !it_index_before_in_after TYPE ty_index_tab
         !iv_start_in_before       TYPE i
         !iv_end_in_before         TYPE i
         !iv_start_in_after        TYPE i
         !iv_end_in_after          TYPE i
       RETURNING
-        VALUE(rs_result)          TYPE ty_match.
+        VALUE(rs_result)          TYPE ty_match ##NEEDED.
 
     METHODS find_matching_blocks
       IMPORTING
@@ -176,10 +176,10 @@ CLASS /apmg/cl_html_diff DEFINITION
         !iv_end_in_before         TYPE i
         !iv_start_in_after        TYPE i
         !iv_end_in_after          TYPE i
+      EXPORTING
+        et_result                 TYPE ty_matches
       CHANGING
-        !ct_matching_blocks       TYPE ty_matches
-      RETURNING
-        VALUE(rt_result)          TYPE ty_matches.
+        !ct_matching_blocks       TYPE ty_matches.
 
     METHODS create_index
       IMPORTING
@@ -246,7 +246,6 @@ CLASS /apmg/cl_html_diff DEFINITION
         !iv_after        TYPE string
       RETURNING
         VALUE(rv_result) TYPE string.
-
   PRIVATE SECTION.
 
     CONSTANTS:
@@ -283,7 +282,7 @@ CLASS /apmg/cl_html_diff DEFINITION
 
     METHODS _inject
       IMPORTING
-        !iv_with_tags TYPE abap_bool.
+        !iv_with_tags TYPE abap_bool ##CALLED.
 
     METHODS _slice
       IMPORTING
@@ -329,7 +328,6 @@ CLASS /apmg/cl_html_diff DEFINITION
         !iv_end          TYPE i
       RETURNING
         VALUE(rv_result) TYPE i.
-
 ENDCLASS.
 
 
@@ -389,8 +387,7 @@ CLASS /apmg/cl_html_diff IMPLEMENTATION.
       lt_operations     TYPE ty_operations,
       lt_post_processed TYPE ty_operations.
 
-    FIELD-SYMBOLS:
-      <ls_last_op> TYPE ty_operation.
+    FIELD-SYMBOLS <ls_last_op> TYPE ty_operation.
 
     " any before_tokens?
     ASSERT it_before_tokens IS NOT INITIAL.
@@ -692,7 +689,7 @@ CLASS /apmg/cl_html_diff IMPLEMENTATION.
     DATA(lt_index_of_before_in_after) = create_index( it_find_these = it_before_tokens
                                                       it_in_these   = it_after_tokens ).
 
-    rt_result = recurs_find_matching_blocks(
+    recurs_find_matching_blocks(
       EXPORTING
         it_before_tokens         = it_before_tokens
         it_after_tokens          = it_after_tokens
@@ -701,6 +698,8 @@ CLASS /apmg/cl_html_diff IMPLEMENTATION.
         iv_end_in_before         = lines( it_before_tokens )
         iv_start_in_after        = 0
         iv_end_in_after          = lines( it_after_tokens )
+      IMPORTING
+        et_result                = rt_result
       CHANGING
         ct_matching_blocks       = lt_matching_blocks ).
 
@@ -963,6 +962,8 @@ CLASS /apmg/cl_html_diff IMPLEMENTATION.
 
   METHOD recurs_find_matching_blocks.
 
+    CLEAR et_result.
+
     DATA(ls_match) = find_match( it_before_tokens         = it_before_tokens
                                  it_after_tokens          = it_after_tokens
                                  it_index_before_in_after = it_index_before_in_after
@@ -1003,7 +1004,7 @@ CLASS /apmg/cl_html_diff IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
-    rt_result = ct_matching_blocks.
+    et_result = ct_matching_blocks.
 
   ENDMETHOD.
 
