@@ -1,4 +1,4 @@
-INTERFACE zif_htmldiff PUBLIC.
+INTERFACE /apmg/if_html_diff PUBLIC.
 
 
 ************************************************************************

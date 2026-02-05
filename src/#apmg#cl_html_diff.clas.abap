@@ -1,4 +1,4 @@
-CLASS zcl_htmldiff DEFINITION
+CLASS /apmg/cl_html_diff DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -17,7 +17,7 @@ CLASS zcl_htmldiff DEFINITION
 
     CONSTANTS c_version TYPE string VALUE '1.0.1' ##NEEDED.
 
-    INTERFACES zif_htmldiff.
+    INTERFACES /apmg/if_html_diff.
 
     METHODS constructor
       IMPORTING
@@ -33,7 +33,7 @@ CLASS zcl_htmldiff DEFINITION
         !iv_css_classes     TYPE abap_bool DEFAULT abap_false
         !iv_support_chinese TYPE abap_bool DEFAULT abap_false
       RETURNING
-        VALUE(ri_result)    TYPE REF TO zif_htmldiff.
+        VALUE(ri_result)    TYPE REF TO /apmg/if_html_diff.
 
   PROTECTED SECTION.
 
@@ -334,7 +334,53 @@ ENDCLASS.
 
 
 
-CLASS zcl_htmldiff IMPLEMENTATION.
+CLASS /apmg/cl_html_diff IMPLEMENTATION.
+
+
+  METHOD /apmg/if_html_diff~htmldiff.
+
+    mv_with_img  = iv_with_img.
+    mv_with_tags = abap_true.
+
+    IF iv_before = iv_after OR iv_after IS INITIAL OR iv_before IS INITIAL.
+      rv_result = render_simple( iv_before = iv_before
+                                 iv_after  = iv_after ).
+    ELSE.
+      DATA(lt_before_tokens) = html_to_tokens( iv_before ).
+      DATA(lt_after_tokens)  = html_to_tokens( iv_after ).
+
+      DATA(lt_ops) = calculate_operations( it_before_tokens = lt_before_tokens
+                                           it_after_tokens  = lt_after_tokens ).
+
+      rv_result = render_operations( it_before_tokens = lt_before_tokens
+                                     it_after_tokens  = lt_after_tokens
+                                     it_operations    = lt_ops ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD /apmg/if_html_diff~textdiff.
+
+    mv_with_img  = abap_false.
+    mv_with_tags = abap_false.
+
+    IF iv_before = iv_after OR iv_after IS INITIAL OR iv_before IS INITIAL.
+      rv_result = render_simple( iv_before = iv_before
+                                 iv_after  = iv_after ).
+    ELSE.
+      DATA(lt_before_tokens) = html_to_tokens( iv_before ).
+      DATA(lt_after_tokens)  = html_to_tokens( iv_after ).
+
+      DATA(lt_ops) = calculate_operations( it_before_tokens = lt_before_tokens
+                                           it_after_tokens  = lt_after_tokens ).
+
+      rv_result = render_operations( it_before_tokens = lt_before_tokens
+                                     it_after_tokens  = lt_after_tokens
+                                     it_operations    = lt_ops ).
+    ENDIF.
+
+  ENDMETHOD.
 
 
   METHOD calculate_operations.
@@ -496,7 +542,7 @@ CLASS zcl_htmldiff IMPLEMENTATION.
 
   METHOD create.
 
-    ri_result = NEW zcl_htmldiff(
+    ri_result = NEW /apmg/cl_html_diff(
       iv_inserts         = iv_inserts
       iv_deletes         = iv_deletes
       iv_css_classes     = iv_css_classes
@@ -761,7 +807,7 @@ CLASS zcl_htmldiff IMPLEMENTATION.
   METHOD is_character.
 
     " Alphanumeric characters (includes underscore) plus characters to identify HTML symbol entities
-    FIND REGEX '[\w&#;]' IN iv_input.
+    FIND REGEX '[\w&#;]' IN iv_input ##REGEX_POSIX.
 
     rv_result = xsdbool( sy-subrc = 0 ).
 
@@ -822,9 +868,9 @@ CLASS zcl_htmldiff IMPLEMENTATION.
   METHOD is_tag.
 
     IF mv_with_img IS INITIAL.
-      FIND REGEX '<[^>]+>' IN iv_token.
+      FIND REGEX '<[^>]+>' IN iv_token ##REGEX_POSIX.
     ELSE.
-      FIND REGEX '<(?!img)[^>]+>' IN iv_token.
+      FIND REGEX '<(?!img)[^>]+>' IN iv_token ##REGEX_POSIX.
     ENDIF.
 
     rv_result = xsdbool( sy-subrc = 0 ).
@@ -1031,52 +1077,6 @@ CLASS zcl_htmldiff IMPLEMENTATION.
         rv_result = rv_result && _join( lt_tags ).
       ENDIF.
     ENDDO.
-
-  ENDMETHOD.
-
-
-  METHOD zif_htmldiff~htmldiff.
-
-    mv_with_img  = iv_with_img.
-    mv_with_tags = abap_true.
-
-    IF iv_before = iv_after OR iv_after IS INITIAL OR iv_before IS INITIAL.
-      rv_result = render_simple( iv_before = iv_before
-                                 iv_after  = iv_after ).
-    ELSE.
-      DATA(lt_before_tokens) = html_to_tokens( iv_before ).
-      DATA(lt_after_tokens)  = html_to_tokens( iv_after ).
-
-      DATA(lt_ops) = calculate_operations( it_before_tokens = lt_before_tokens
-                                           it_after_tokens  = lt_after_tokens ).
-
-      rv_result = render_operations( it_before_tokens = lt_before_tokens
-                                     it_after_tokens  = lt_after_tokens
-                                     it_operations    = lt_ops ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD zif_htmldiff~textdiff.
-
-    mv_with_img  = abap_false.
-    mv_with_tags = abap_false.
-
-    IF iv_before = iv_after OR iv_after IS INITIAL OR iv_before IS INITIAL.
-      rv_result = render_simple( iv_before = iv_before
-                                 iv_after  = iv_after ).
-    ELSE.
-      DATA(lt_before_tokens) = html_to_tokens( iv_before ).
-      DATA(lt_after_tokens)  = html_to_tokens( iv_after ).
-
-      DATA(lt_ops) = calculate_operations( it_before_tokens = lt_before_tokens
-                                           it_after_tokens  = lt_after_tokens ).
-
-      rv_result = render_operations( it_before_tokens = lt_before_tokens
-                                     it_after_tokens  = lt_after_tokens
-                                     it_operations    = lt_ops ).
-    ENDIF.
 
   ENDMETHOD.
 
