@@ -148,15 +148,7 @@
     "no_chained_assignment": true,
     "no_external_form_calls": true,
     "no_inline_in_optional_branches": false,
-    "no_prefixes": {
-      "data": "^[LGM].?_",
-      "statics": "^S.?_",
-      "fieldSymbols": "^<[LGM].?_",
-      "constants": "^[LGM]C_",
-      "types": "^.*_TY_",
-      "methodParameters": "^[ICER].?_",
-      "allowIsPrefixBoolean": true
-    },
+    "no_prefixes": false,
     "no_public_attributes": {
       "allowReadOnly": true,
       "ignoreTestClasses": false
