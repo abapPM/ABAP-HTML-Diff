@@ -867,9 +867,9 @@ CLASS /apmg/cl_html_diff IMPLEMENTATION.
   METHOD is_tag.
 
     IF mv_with_img IS INITIAL.
-      FIND REGEX '<[^>]+>' IN iv_token ##REGEX_POSIX.
+      FIND REGEX '<[^>]+>' IN iv_token ##SUBRC_OK ##REGEX_POSIX.
     ELSE.
-      FIND REGEX '<(?!img)[^>]+>' IN iv_token ##REGEX_POSIX.
+      FIND REGEX '<(?!img)[^>]+>' IN iv_token ##SUBRC_OK ##REGEX_POSIX.
     ENDIF.
 
     rv_result = xsdbool( sy-subrc = 0 ).

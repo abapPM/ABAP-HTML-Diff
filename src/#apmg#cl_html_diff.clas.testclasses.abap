@@ -6,29 +6,28 @@ CLASS lcl_helper DEFINITION.
 
   PUBLIC SECTION.
 
-    CLASS-METHODS:
-      format
-        IMPORTING
-          iv_string        TYPE string
-        RETURNING
-          VALUE(rv_result) TYPE string,
+    CLASS-METHODS format
+      IMPORTING
+        iv_string        TYPE string
+      RETURNING
+        VALUE(rv_result) TYPE string.
 
-      htmldiff
-        IMPORTING
-          iv_before        TYPE string
-          iv_after         TYPE string
-          iv_with_img      TYPE abap_bool DEFAULT abap_false
-          iv_css           TYPE abap_bool DEFAULT abap_false
-          iv_chinese       TYPE abap_bool DEFAULT abap_false
-        RETURNING
-          VALUE(rv_result) TYPE string,
+    CLASS-METHODS htmldiff
+      IMPORTING
+        iv_before        TYPE string
+        iv_after         TYPE string
+        iv_with_img      TYPE abap_bool DEFAULT abap_false
+        iv_css           TYPE abap_bool DEFAULT abap_false
+        iv_chinese       TYPE abap_bool DEFAULT abap_false
+      RETURNING
+        VALUE(rv_result) TYPE string.
 
-      textdiff
-        IMPORTING
-          iv_before        TYPE string
-          iv_after         TYPE string
-        RETURNING
-          VALUE(rv_result) TYPE string.
+    CLASS-METHODS textdiff
+      IMPORTING
+        iv_before        TYPE string
+        iv_after         TYPE string
+      RETURNING
+        VALUE(rv_result) TYPE string.
 
 ENDCLASS.
 
@@ -438,7 +437,6 @@ CLASS ltcl_calculate_operations DEFINITION FOR TESTING
 
     METHODS:
       setup,
-
       calculate_operations
         IMPORTING
           !iv_before TYPE string
@@ -446,12 +444,10 @@ CLASS ltcl_calculate_operations DEFINITION FOR TESTING
           !iv_count  TYPE i
           !iv_index  TYPE i
           !is_exp    TYPE /apmg/cl_html_diff=>ty_operation,
-
       action_middle FOR TESTING,
       action_beginning FOR TESTING,
       action_end FOR TESTING,
       action_combo FOR TESTING.
-
 
 ENDCLASS.
 
@@ -760,27 +756,22 @@ CLASS ltcl_find_matching_blocks DEFINITION FOR TESTING
 
     METHODS:
       setup,
-
       index_tokens FOR TESTING,
-
       find_match
         IMPORTING
           !iv_before       TYPE string
           !iv_after        TYPE string
         RETURNING
           VALUE(rs_result) TYPE /apmg/cl_html_diff=>ty_match,
-
       find_match_1 FOR TESTING,
       find_match_2 FOR TESTING,
       find_match_3 FOR TESTING,
-
       find_matching_blocks
         IMPORTING
           !iv_before       TYPE string
           !iv_after        TYPE string
         RETURNING
           VALUE(rt_result) TYPE /apmg/cl_html_diff=>ty_matches,
-
       find_matching_blocks_1 FOR TESTING,
       find_matching_blocks_2 FOR TESTING.
 
@@ -1094,14 +1085,12 @@ CLASS ltcl_render_operations DEFINITION FOR TESTING
 
     METHODS:
       setup,
-
       render_operations
         IMPORTING
           !iv_before       TYPE string
           !iv_after        TYPE string
         RETURNING
           VALUE(rv_result) TYPE string,
-
       test_equal FOR TESTING,
       test_insert FOR TESTING,
       test_delete FOR TESTING,
