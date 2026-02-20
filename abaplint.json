@@ -20,7 +20,7 @@
     "useApackDependencies": false
   },
   "rules": {
-    "7bit_ascii": true,
+    "7bit_ascii": false,
     "abapdoc": false,
     "add_test_attributes": true,
     "align_parameters": false,
