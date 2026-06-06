@@ -204,4 +204,3 @@ Made with ❤ in Canada
 Copyright 2025 apm.to Inc. <https://apm.to>
 
 Follow [@marcf.be](https://bsky.app/profile/marcf.be) on Bluesky and [@marcfbe](https://linkedin.com/in/marcfbe) or LinkedIn
-
