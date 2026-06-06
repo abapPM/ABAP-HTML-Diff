@@ -2,9 +2,15 @@
 <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
  <asx:values>
   <DATA>
+   <NAME>html-diff</NAME>
    <MASTER_LANGUAGE>E</MASTER_LANGUAGE>
    <STARTING_FOLDER>/src/</STARTING_FOLDER>
    <FOLDER_LOGIC>PREFIX</FOLDER_LOGIC>
+   <IGNORE>
+    <item>!/package.abap.json</item>
+    <item>!/README.md</item>
+   </IGNORE>
+   <VERSION_CONSTANT>/APMG/IF_HTML_DIFF=&gt;C_VERSION</VERSION_CONSTANT>
   </DATA>
  </asx:values>
 </asx:abap>

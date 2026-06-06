@@ -15,8 +15,6 @@ CLASS /apmg/cl_html_diff DEFINITION
 
   PUBLIC SECTION.
 
-    CONSTANTS c_version TYPE string VALUE '1.1.0' ##NEEDED.
-
     INTERFACES /apmg/if_html_diff.
 
     METHODS constructor

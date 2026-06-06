@@ -12,6 +12,8 @@ INTERFACE /apmg/if_html_diff PUBLIC.
 * SPDX-License-Identifier: MIT
 ************************************************************************
 
+  CONSTANTS c_version TYPE string VALUE '1.1.0' ##NEEDED.
+
   METHODS htmldiff
     IMPORTING
       !iv_before       TYPE string
