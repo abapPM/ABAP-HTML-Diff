@@ -38,5 +38,10 @@
   "engines": {
     "abap": ">=7.50",
     "apm": ">=1"
+  },
+  "sapPackage": {
+    "default": "/APMG/HTML-DIFF",
+    "applicationComponent": "BC",
+    "abapLanguageVersion": "standard"
   }
 }
