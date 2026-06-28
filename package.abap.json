@@ -33,7 +33,7 @@
     "url": "https://github.com/sponsors/abapPM"
   },
   "dependencies": {
-    "error": "^1.0.0"
+    "exceptions": "^1.0.0"
   },
   "engines": {
     "abap": ">=7.50",
