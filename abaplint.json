@@ -20,7 +20,11 @@
     "useApackDependencies": false
   },
   "rules": {
-    "7bit_ascii": false,
+    "7bit_ascii": {
+      "exclude": [
+        "#apmg#cl_html_diff.clas.testclasses.abap"
+      ]
+    },
     "abapdoc": false,
     "add_test_attributes": true,
     "aff_and_xml": true,
